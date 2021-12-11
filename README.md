@@ -75,3 +75,58 @@ A janela do programa deve retornar a imagem, para **P1** = (50,50) e **P2** = (2
 </p>
 
 ## Exercício 2.2
+
+Nesse exercício devemos aplicar um algoritmo que embaralhe uma imagem, com partições de área iguais da imagem. Para uma imagem quadrada, devemos dividir ela em quatro quadrados iguais representando os quadrantes daquela imagem. Assim, tendo os quatro quadrantes, devemos embaralhar eles na imagem, de forma que a imagem resultante seja uma ordem aleatória dos quatro quadrantes.
+
+Para isso, começamos dando *input* na imagem escolhida e criando uma cópia dela, que será sua versão embaralhada. Esse trecho do código de encontra abaixo:
+
+```
+    Mat image;
+    image = imread("biel.png", IMREAD_GRAYSCALE);
+    if (!image.data) {
+        cout << "nao abriu biel.png" << endl;
+        return -1;
+    }
+    Mat embaralhada = image.clone();
+```
+
+Após isso, devemos particionar a imagem nos seus quarto quadrantes. Afim disso, calculamos o ponto central da imagem de tal forma:
+
+```
+    int largura_central = image.cols/2;
+    int altura_central = image.rows/2;
+```
+
+Tendo essas coordenadas centrais, podemos delimitar a área dos quadrantes dessa forma:
+
+```
+    Rect region_array[4];
+    region_array[0] = Rect(0, 0, largura_central, altura_central);
+    region_array[1] = Rect(largura_central, 0, largura_central, altura_central);
+    region_array[2] = Rect(0, altura_central, largura_central, altura_central);
+    region_array[3] = Rect(largura_central, altura_central, largura_central, altura_central);
+    
+```
+
+Passamos o conteúdo do imagem para sua respectiva região:
+
+```
+    Mat im0 = image(region_array[0]);
+    Mat im1 = image(region_array[1]);
+    Mat im2 = image(region_array[2]);
+    Mat im3 = image(region_array[3]);
+```
+
+Agora nós temos quatro partes da imagem guardadas nas variáveis *im0, im1, im2* e *im3*. Para embaralhar elas na imagem resultante, temos que criar uma algoritmo capaz de randomizar a ordem de construção da imagem original. Para isso utilizaremos essa rotina:
+
+```
+    int order_array[4] = { 0 , 1 , 2 , 3 };
+    shuffle(begin(order_array), end(order_array), default_random_engine(system_clock::now().time_since_epoch().count()));
+```
+
+Essa rotina define a ordem (0, 1, 2, 3), que é logo embaralhada pela função *shuffle*, do próprio C++. Vale a pena cita que o termo *default_random_engine(system_clock::now().time_since_epoch().count()* usa tanto a biblioteca <chrono> quanto <random>. Então o início do código deve incluir:
+
+```
+#include <random> 
+using namespace chrono;
+```
