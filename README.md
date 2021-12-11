@@ -225,3 +225,5 @@ A mudança no código ficaria:
 ```
 cv::floodFill(image, p, nobjects % 256);
 ```
+
+## Exercício 3.2
