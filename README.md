@@ -117,16 +117,45 @@ Passamos o conteúdo do imagem para sua respectiva região:
     Mat im3 = image(region_array[3]);
 ```
 
-Agora nós temos quatro partes da imagem guardadas nas variáveis *im0, im1, im2* e *im3*. Para embaralhar elas na imagem resultante, temos que criar uma algoritmo capaz de randomizar a ordem de construção da imagem original. Para isso utilizaremos essa rotina:
+Agora nós temos quatro partes da imagem guardadas nas variáveis *im0, im1, im2* e *im3*. Para embaralhar elas na imagem resultante, temos que criar um algoritmo capaz de randomizar a ordem de construção da imagem original. Para isso utilizaremos essa rotina:
 
 ```
     int order_array[4] = { 0 , 1 , 2 , 3 };
     shuffle(begin(order_array), end(order_array), default_random_engine(system_clock::now().time_since_epoch().count()));
 ```
 
-Essa rotina define a ordem (0, 1, 2, 3), que é logo embaralhada pela função *shuffle*, do próprio C++. Vale a pena cita que o termo *default_random_engine(system_clock::now().time_since_epoch().count()* usa tanto a biblioteca <chrono> quanto <random>. Então o início do código deve incluir:
+Essa rotina define a ordem (0, 1, 2, 3), que é logo embaralhada pela função *shuffle*, do próprio C++. Vale a pena cita que o termo *default_random_engine(system_clock::now().time_since_epoch().count()* usa tanto a biblioteca <chrono> quanto <random>. Esse termo server de semente randomizada pelo *timer* do próprio computador, que entra como *input* da função *shuffle* (mais informações, visitar a documentação oficial do *shuffle*, *chrono* e *random*). Então o início do código deve incluir:
 
 ```
 #include <random> 
 using namespace chrono;
 ```
+
+Finalmente, tendo a ordem de contrução do array *order_array* randomizada, podemos construir a nova imagem de forma a randomizar o posicionamento dos quadrantes. Para isso, copiamos essas partições para a nova imagem.
+
+```
+    im0.copyTo(embaralhada(region_array[order_array[0]]));
+    im1.copyTo(embaralhada(region_array[order_array[1]]));
+    im2.copyTo(embaralhada(region_array[order_array[2]]));
+    im3.copyTo(embaralhada(region_array[order_array[3]]));
+
+    cv::imshow("embaralhado", embaralhada);
+    cv::imwrite("embaralhado.png", embaralhada);
+    cv::waitKey();
+```
+
+Com isso, exemplos de resultados que podemos ter são:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48588172/145681073-f447e27c-08a7-4249-b069-217c4c4f7c29.png" />
+</p>	
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48588172/145681084-33253165-d158-42c2-b7ac-9608df919e74.png" />
+</p>	
+	
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/48588172/145681091-c73e4e8f-e8e9-4b5d-a274-22585c72368a.png" />
+</p>
+	
+## Exercício 3.1
