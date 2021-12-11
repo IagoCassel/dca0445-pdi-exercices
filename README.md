@@ -68,7 +68,7 @@ Por fim, mostramos a imagem em uma janela e guardamos seu resultado em um PNG co
     imwrite("invertido.png", image);
 ```
 
-A janela do programa deve retornar a imagem:
+A janela do programa deve retornar a imagem, para **P1** = (50,50) e **P2** = (200,200):
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/48588172/145677211-60d21d15-4a65-4be4-8959-d0b191eb0898.png" />
