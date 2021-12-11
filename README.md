@@ -150,7 +150,7 @@ Com isso, exemplos de resultados que podemos ter são:
   <img src="https://user-images.githubusercontent.com/48588172/145681073-f447e27c-08a7-4249-b069-217c4c4f7c29.png" />								
 </p><p align="center">
   <img src="https://user-images.githubusercontent.com/48588172/145681084-33253165-d158-42c2-b7ac-9608df919e74.png" />								
-</p></p><p align="right">
+</p><p align="right">
   <img src="https://user-images.githubusercontent.com/48588172/145681091-c73e4e8f-e8e9-4b5d-a274-22585c72368a.png" />
 </p>
 	
