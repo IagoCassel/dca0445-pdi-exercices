@@ -151,3 +151,62 @@ Com isso, exemplos de resultados que podemos ter são:
 </p>
 	
 ## Exercício 3.1
+
+Nesta questão foi proposto que nós verifiquemos o porquê da variável *nobjects* possuir um problema na rotulação, quando seu valor passa de 255. O código apresentado é:
+	
+```
+#include <iostream>
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+
+int main(int argc, char** argv){
+  cv::Mat image, realce;
+  int width, height;
+  int nobjects;
+  
+  cv::Point p;
+  image = cv::imread(argv[1], cv::IMREAD_GRAYSCALE);
+  
+  if(!image.data){
+    std::cout << "imagem nao carregou corretamente\n";
+    return(-1);
+  }
+
+  width=image.cols;
+  height=image.rows;
+  std::cout << width << "x" << height << std::endl;
+
+  p.x=0;
+  p.y=0;
+
+  // busca objetos presentes
+  nobjects=0;
+  for(int i=0; i<height; i++){
+    for(int j=0; j<width; j++){
+      if(image.at<uchar>(i,j) == 255){
+        // achou um objeto
+        nobjects++;
+        p.x=j;
+        p.y=i;
+  		// preenche o objeto com o contador
+		  cv::floodFill(image,p,nobjects);
+      }
+    }
+  }
+  std::cout << "a figura tem " << nobjects << " bolhas\n";
+  cv::equalizeHist(image, realce);
+  cv::imshow("image", image);
+  cv::imshow("realce", realce);
+  cv::imwrite("labeling.png", image);
+  cv::waitKey();
+  return 0;
+}
+```
+
+Com uma rápida visualização, é possível perceber que o problema está no *input* da função *cv::floodFill(image,p,nobjects)*. No caso, esse *nobjects* não pode passar de 255. Para isso, podemos resolver esse problema passando não o *nobjects* como *input* da função, mas sim o resto da divisão do *nobjects* com 256, ou seja *nobjects%256*. Assim:
+*Caso nobjects = 149: nobjects%256 = 149;
+*Caso nobjects = 255: nobjects%256 = 255;
+*Caso nobjects = 256: nobjects%256 = 0;
+*Caso nobjects = 257: nobjects%256 = 1;
+*Caso nobjects = 321: nobjects%256 = 65;	
