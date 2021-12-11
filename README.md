@@ -212,14 +212,6 @@ Com uma rápida visualização, é possível perceber que o problema está no *i
 * Caso *nobjects = 257*: *nobjects % 256 = 1*;
 * Caso *nobjects = 321*: *nobjects % 256 = 65*.	
 
-**(Não necessário)** Ainda, caso não seja desejável que entremos com o *input = 0* no *floodFill* podemos alterar o código para *(nobjects % 256) + (1 & (nobjects > 255))*. Assim o sistema retornaria:
-
-* Caso *nobjects = 149*: *(nobjects % 256) + (1 & (nobjects > 255)) = 149*;
-* Caso *nobjects = 255*: *(nobjects % 256) + (1 & (nobjects > 255)) = 255*;
-* Caso *nobjects = 256*: *(nobjects % 256) + (1 & (nobjects > 255)) = 1*;
-* Caso *nobjects = 257*: *(nobjects % 256) + (1 & (nobjects > 255)) = 2*;
-* Caso *nobjects = 321*: *(nobjects % 256) + (1 & (nobjects > 255)) = 66*.
-
 A mudança no código ficaria:
 	
 ```
