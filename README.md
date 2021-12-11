@@ -205,8 +205,8 @@ int main(int argc, char** argv){
 ```
 
 Com uma rápida visualização, é possível perceber que o problema está no *input* da função *cv::floodFill(image,p,nobjects)*. No caso, esse *nobjects* não pode passar de 255. Para isso, podemos resolver esse problema passando não o *nobjects* como *input* da função, mas sim o resto da divisão do *nobjects* com 256, ou seja *nobjects%256*. Assim:
-*Caso nobjects = 149: nobjects%256 = 149;
-*Caso nobjects = 255: nobjects%256 = 255;
-*Caso nobjects = 256: nobjects%256 = 0;
-*Caso nobjects = 257: nobjects%256 = 1;
-*Caso nobjects = 321: nobjects%256 = 65;	
+* Caso nobjects = 149: nobjects%256 = 149;
+* Caso nobjects = 255: nobjects%256 = 255;
+* Caso nobjects = 256: nobjects%256 = 0;
+* Caso nobjects = 257: nobjects%256 = 1;
+* Caso nobjects = 321: nobjects%256 = 65;	
